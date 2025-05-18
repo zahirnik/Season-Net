@@ -35,7 +35,7 @@ Season-Net was developed using:
 ## ⚙️ Training & Usage
 
 Before training:
-1. Prepare SEAS5 and ERA5 data in NetCDF format
+1. Prepare C3S forecast models and ERA5 data in NetCDF format
 2. Configure parameters in `run.py` (e.g., years, variables, batch size)
 3. Launch training with:
 
