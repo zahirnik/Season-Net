@@ -1,0 +1,142 @@
+
+README: Data Availability and Download Instructions
+==================================================
+
+📂 Data Availability
+--------------------
+The datasets used in this study are sourced from the Copernicus Climate Data Store (CDS), maintained by the 
+European Centre for Medium-Range Weather Forecasts (ECMWF). Specifically, the data are from:
+
+- Seasonal Forecast – Original Single Levels
+- Seasonal Forecast – Original Pressure Levels
+
+These datasets are freely available to registered users under the Copernicus Terms of Use, which do not permit 
+redistribution of the downloaded files. Therefore, we do not include any raw data in this repository.
+
+🔗 Accessing the Data Yourself
+------------------------------
+To access and reproduce the datasets, follow the instructions below. You will need to:
+1. Create a free account at the CDS Portal (https://cds.climate.copernicus.eu).
+2. Install the CDS API (https://cds.climate.copernicus.eu/api-how-to).
+3. Configure your `.cdsapirc` file (API key).
+4. Use the Python scripts provided below to download the datasets.
+
+📥 Download Scripts
+-------------------
+
+1. Seasonal Forecast – Single Level Data (e.g., 2m temperature)
+--------------------------------------------------------------
+import cdsapi
+import numpy as np
+
+c = cdsapi.Client()
+leadtime = [str(x) for x in np.arange(24, 5064, 6)]
+params = {
+    'originating_centre': 'meteo_france',
+    'format': 'netcdf',
+    'system': '8',
+    'variable': '2m_temperature',
+    'leadtime_hour': leadtime,
+    'day': ['01'],
+    'grid': [1.0, 1.0],
+    'time': [f'{h:02d}:00' for h in range(24)],
+}
+
+years = range(2002, 2017)
+months = ['02', '05', '08', '11']
+
+for year in years:
+    for month in months:
+        params['year'] = str(year)
+        params['month'] = month
+        filename = f'France_{year}_{month}.nc'
+        c.retrieve('seasonal-original-single-levels', params).download(filename)
+
+2. Seasonal Forecast – Pressure Level Data (All Available Levels)
+-----------------------------------------------------------------
+import cdsapi
+import numpy as np
+
+c = cdsapi.Client()
+leadtime = [str(x) for x in np.arange(24, 5064, 6)]
+all_pressure_levels = [
+    '1', '2', '3', '5', '7', '10', '20', '30', '50', '70', '100', '125',
+    '150', '175', '200', '225', '250', '300', '350', '400', '450', '500',
+    '550', '600', '650', '700', '750', '775', '800', '825', '850', '875',
+    '900', '925', '950', '975', '1000'
+]
+
+params = {
+    'originating_centre': 'meteo_france',
+    'format': 'netcdf',
+    'system': '8',
+    'variable': ['geopotential', 'temperature'],
+    'pressure_level': all_pressure_levels,
+    'leadtime_hour': leadtime,
+    'day': ['01']
+}
+
+years = range(1993, 2017)
+months = ['02', '05', '08', '11']
+
+for year in years:
+    for month in months:
+        params['year'] = str(year)
+        params['month'] = month
+        filename = f'France_{year}_{month}_ALL_PRESSURE.nc'
+        print(f"Downloading: {filename}")
+        c.retrieve('seasonal-original-pressure-levels', params).download(filename)
+
+📜 Licensing and Citation
+-------------------------
+Please cite the dataset source as:
+
+ECMWF (2023): Seasonal forecast data from Copernicus Climate Change Service (C3S). 
+Available from: https://cds.climate.copernicus.eu
+
+Use of this data is subject to the Copernicus License (https://cds.climate.copernicus.eu/disclaimer), 
+which allows use for research and publication but requires attribution and may restrict redistribution in some cases.
+
+
+📜 Licensing and Citation (Updated)
+-----------------------------------
+This dataset is made available under the terms of the Copernicus Licence (v1.2, November 2019). Redistribution is permitted,
+provided proper attribution is given, and a disclaimer is included.
+
+Attribution:
+- "Generated using Copernicus Climate Change Service information [Year]"
+- or "Contains modified Copernicus Climate Change Service information [Year]"
+
+Disclaimer:
+- "Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains."
+
+Full license text available at:
+https://cds.climate.copernicus.eu/disclaimer
+
+
+📘 Use of ERA5 Data
+--------------------
+This study also uses ERA5 reanalysis data, provided by the Copernicus Climate Change Service (C3S) and produced by ECMWF.
+ERA5 provides hourly estimates of a large number of atmospheric, land and oceanic climate variables.
+
+Users can access ERA5 data through the Copernicus Climate Data Store (CDS):
+- https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels
+
+We have used ERA5 as reference (“truth”) data for evaluation and bias correction purposes. The same licensing conditions
+described below also apply to ERA5 data, including attribution and disclaimers.
+
+📜 Licensing and Citation (Final Version)
+-----------------------------------------
+This dataset is made available under the terms of the Licence to Use Copernicus Products as provided by ECMWF.
+
+Redistribution is permitted, provided proper attribution is given, and a disclaimer is included.
+
+Attribution:
+- "Generated using Copernicus Climate Change Service information (1993–2017)"
+- or "Contains modified Copernicus Climate Change Service information (1993–2017)"
+
+Disclaimer:
+- "Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains."
+
+Full license text available at:
+https://cds.climate.copernicus.eu/disclaimer-privacy
