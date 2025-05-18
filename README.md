@@ -29,7 +29,7 @@ Season-Net was developed using:
 - 📈 **Input**: C3S seasonal forecasts (e.g., 2m temperature, Z500, etc.)
 - 🎯 **Target**: ERA5 reanalysis (used as ground truth)
 - 🌐 Spatial resolution: 1.0° × 1.0° grid (modifiable)
-- ⏱️ Temporal coverage: Monthly initializations (e.g., Feb/May/Aug/Nov), multiple lead times
+- ⏱️ Temporal coverage: Monthly initializations (e.g., Feb/May/Aug/Nov), 3 month lead time
 
 ---
 ## ⚙️ Training & Usage
