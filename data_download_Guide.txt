@@ -10,14 +10,13 @@ European Centre for Medium-Range Weather Forecasts (ECMWF). Specifically, the da
 - Seasonal Forecast – Original Single Levels
 - Seasonal Forecast – Original Pressure Levels
 
-These datasets are freely available to registered users under the Copernicus Terms of Use, which do not permit 
-redistribution of the downloaded files. Therefore, we do not include any raw data in this repository.
+These datasets are freely available to registered users under the Copernicus Terms of Use. Therefore, we do not include any raw data in this repository.
 
 🔗 Accessing the Data Yourself
 ------------------------------
 To access and reproduce the datasets, follow the instructions below. You will need to:
 1. Create a free account at the CDS Portal (https://cds.climate.copernicus.eu).
-2. Install the CDS API (https://cds.climate.copernicus.eu/api-how-to).
+2. Install the CDS API (https://cds.climate.copernicus.eu/how-to-api).
 3. Configure your `.cdsapirc` file (API key).
 4. Use the Python scripts provided below to download the datasets.
 
@@ -42,7 +41,7 @@ params = {
     'time': [f'{h:02d}:00' for h in range(24)],
 }
 
-years = range(2002, 2017)
+years = range(1993, 2017)
 months = ['02', '05', '08', '11']
 
 for year in years:
@@ -94,7 +93,7 @@ Please cite the dataset source as:
 ECMWF (2023): Seasonal forecast data from Copernicus Climate Change Service (C3S). 
 Available from: https://cds.climate.copernicus.eu
 
-Use of this data is subject to the Copernicus License (https://cds.climate.copernicus.eu/disclaimer), 
+Use of this data is subject to the Copernicus License (https://cds.climate.copernicus.eu/disclaimer-privacy), 
 which allows use for research and publication but requires attribution and may restrict redistribution in some cases.
 
 
@@ -111,7 +110,7 @@ Disclaimer:
 - "Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus information or data it contains."
 
 Full license text available at:
-https://cds.climate.copernicus.eu/disclaimer
+https://cds.climate.copernicus.eu/disclaimer-privacy
 
 
 📘 Use of ERA5 Data
