@@ -17,7 +17,7 @@ def set_seed(seed):
 import torch
 import torch.nn.functional as F
 
-def qm_loss(
+def sliding_qm_loss(
     forecast,     # [B, T, H, W]
     reference,    # [B, T, H, W]
     window=21,    # temporal window size
@@ -100,7 +100,7 @@ def train_model(model, train_loader, val_loader, epochs=30, lr=1e-4, device="cud
         for x, y in train_loader:
             x, y = x.to(device), y.to(device).squeeze(1)
             preds = model(x)
-            loss = qm_loss(preds, y)
+            loss = sliding_qm_loss(preds, y)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -117,7 +117,7 @@ def train_model(model, train_loader, val_loader, epochs=30, lr=1e-4, device="cud
             for x, y in val_loader:
                 x, y = x.to(device), y.to(device).squeeze(1)
                 preds = model(x)
-                loss = qm_loss(preds, y)
+                loss = sliding_qm_loss(preds, y)
                 total_val_loss += loss.item()
                 val_batches += 1
 
