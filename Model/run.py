@@ -45,8 +45,8 @@ def main():
     Lon_lim = range(64) if Region == 'AF' else range(230, 294)
 
     # === LOAD INPUT AND TARGET DATA ===
-    input_data0 = xr.open_dataset('/data/EECS-Theory/Clim_risk_Lab_Zahir_Rendani/France-ALL/out/MF_JJA_Season.nc').isel(number=list(range(7)) + list(range(25, 33)),time=range(90))
-    input_data1 = xr.open_dataset('/data/EECS-Theory/Clim_risk_Lab_Zahir_Rendani/France-ALL/Prcp/France_Prcp_JJA.nc').isel(number=range(7),time=range(90))
+    input_data0 = xr.open_dataset('/data/.../MF_JJA_Season.nc').isel(number=list(range(7)) + list(range(25, 33)),time=range(90))
+    input_data1 = xr.open_dataset('/.../France_Prcp_JJA.nc').isel(number=range(7),time=range(90))
     input_data1['pr'][:, 0, :, :, :] = input_data1['pr'][:, 2, :, :, :]
     input_data1['pr'][:, 1, :, :, :] = input_data1['pr'][:, 2, :, :, :]
     input_data1 = input_data1.rename_vars({"pr": "t2m"}).assign_coords(number=[15, 16, 17, 18, 19, 20, 21])
@@ -64,7 +64,7 @@ def main():
     DEM = DEM.reindex(latitude=list(reversed(DEM.latitude)))
 
     input_data0 = xr.concat([input_data0, input_data1, Coorrds, DEM], dim='number', coords='minimal')
-    target_data0 = xr.open_dataset('/data/EECS-Theory/Clim_risk_Lab_Zahir_Rendani/ERA5/temp/ERA_JJA_Season.nc')
+    target_data0 = xr.open_dataset('/data/.../ERA_JJA_Season.nc')
 
     input_data0 = input_data0.isel(latitude=Lat_lim, longitude=Lon_lim, time=range(90))
     target_data0 = target_data0.isel(latitude=Lat_lim, longitude=Lon_lim, time=range(90))
